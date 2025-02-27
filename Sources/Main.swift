@@ -26,5 +26,10 @@ struct Main {
         flightRegistry.importRegistry(fromDirectory: "/var/run/dump1090-mutability/flight_paths")
         flightRegistry.updateRegistry(fromDirectory: "/var/run/dump1090-mutability", withNumberOfFiles: 120)
         flightRegistry.exportRegistry(toDirectory: "/var/run/dump1090-mutability/flight_paths")
+        
+        var statistics = Statistics()
+        statistics.generateStatistics(from: aircraftRegistry)
+        statistics.generateStatistics(from: manufacturerRegistry)
+        statistics.export(toDirectory: "/var/run/dump1090-mutability/")
     }
 }

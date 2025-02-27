@@ -45,10 +45,7 @@ struct ManufacturerRegistry: Codable {
         }
     }
     
-    func exportFrequentTypes (toDirectory directoryPath: String, withMaximumCount n: Int) {
-        let exportPath = "\(directoryPath)/aircraft_frequent_types.json"
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted // Makes JSON readable
+    func getFrequentTypes () -> [AircraftType] {
         
         var types: [AircraftType] = []
         
@@ -58,10 +55,19 @@ struct ManufacturerRegistry: Codable {
             }
         }
         
-        let frequentTypes = Array((types.sorted { ($0.aircraft.count, $0.lastSeen) > ($1.aircraft.count, $1.lastSeen) })[0..<n])
+        return types.sorted { ($0.aircraft.count, $0.lastSeen) > ($1.aircraft.count, $1.lastSeen) }
+    }
+    
+    func exportFrequentTypes (toDirectory directoryPath: String, withMaximumCount n: Int) {
+        let exportPath = "\(directoryPath)/aircraft_frequent_types.json"
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted // Makes JSON readable
+        
+        let frequentTypes = getFrequentTypes()
+        let topFrequentTypes = Array(frequentTypes[0..<n])
         
         do {
-            let jsonData = try encoder.encode(frequentTypes)
+            let jsonData = try encoder.encode(topFrequentTypes)
             try jsonData.write(to: URL(fileURLWithPath: exportPath))
         } catch {
             print("Error writing to file: \(error)")

@@ -87,15 +87,20 @@ struct AircraftRegistry: Codable {
         }
     }
     
+    func getFrequentTails() -> [AircraftData] {
+        return history.values.sorted { ($0.timesSeen.count, $0.lastSeen) > ($1.timesSeen.count, $1.lastSeen) }
+    }
+    
     func exportFrequentTails (toDirectory directoryPath: String, withMaximumCount n: Int) {
         let exportPath = "\(directoryPath)/aircraft_frequent_tails.json"
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted // Makes JSON readable
         
-        let frequentTails = Array((history.values.sorted { ($0.timesSeen.count, $0.lastSeen) > ($1.timesSeen.count, $1.lastSeen) })[0..<n])
+        let frequentTails = getFrequentTails()
+        let topFrequentTails = Array(frequentTails[0..<n])
         
         do {
-            let jsonData = try encoder.encode(frequentTails)
+            let jsonData = try encoder.encode(topFrequentTails)
             try jsonData.write(to: URL(fileURLWithPath: exportPath))
         } catch {
             print("Error writing to file: \(error)")
