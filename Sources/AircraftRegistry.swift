@@ -87,4 +87,34 @@ struct AircraftRegistry: Codable {
             }
         }
     }
+    
+    func exportFrequentTails (toDirectory directoryPath: String, withMaximumCount n: Int) {
+        let exportPath = "\(directoryPath)/aircraft_frequent_tails.json"
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted // Makes JSON readable
+        
+        let frequentTails = Array((history.values.sorted { ($0.timesSeen.count, $0.lastSeen) > ($1.timesSeen.count, $1.lastSeen) })[0..<n])
+        
+        do {
+            let jsonData = try encoder.encode(frequentTails)
+            try jsonData.write(to: URL(fileURLWithPath: exportPath))
+        } catch {
+            print("Error writing to file: \(error)")
+        }
+    }
+    
+    func exportRecentlyTracked (toDirectory directoryPath: String, withMaximumCount n: Int) {
+        let exportPath = "\(directoryPath)/aircraft_recently_tracked.json"
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted // Makes JSON readable
+        
+        let recentlyTracked = Array((history.values.sorted { $0.lastSeen > $1.lastSeen })[0..<n])
+        
+        do {
+            let jsonData = try encoder.encode(recentlyTracked)
+            try jsonData.write(to: URL(fileURLWithPath: exportPath))
+        } catch {
+            print("Error writing to file: \(error)")
+        }
+    }
 }

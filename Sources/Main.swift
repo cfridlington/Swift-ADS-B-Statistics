@@ -8,11 +8,18 @@ import Foundation
 struct Main {
     static func main() async {
 
-        var registry = AircraftRegistry(history: [:], lastUpdated: 0)
+        var aircraftRegistry = AircraftRegistry(history: [:], lastUpdated: 0)
 
-        registry.importRegistry(fromDirectory: "/var/run/dump1090-mutability")
-        registry.updateRegistry(fromDirectory: "/var/run/dump1090-mutability", withNumberOfFiles: 120)
-        await registry.fetchAircraftProperties()
-        registry.exportRegistry(toDirectory: "/var/run/dump1090-mutability")
+        aircraftRegistry.importRegistry(fromDirectory: "/var/run/dump1090-mutability")
+        aircraftRegistry.updateRegistry(fromDirectory: "/var/run/dump1090-mutability", withNumberOfFiles: 120)
+        await aircraftRegistry.fetchAircraftProperties()
+        aircraftRegistry.exportRegistry(toDirectory: "/var/run/dump1090-mutability")
+        aircraftRegistry.exportFrequentTails(toDirectory: "/var/run/dump1090-mutability", withMaximumCount: 10)
+        aircraftRegistry.exportRecentlyTracked(toDirectory: "/var/run/dump1090-mutability", withMaximumCount: 10)
+        
+        var manufacturerRegistry = ManufacturerRegistry()
+        manufacturerRegistry.importAircraft(fromRegistry: aircraftRegistry)
+        manufacturerRegistry.export(toDirectory: "/var/run/dump1090-mutability")
+        manufacturerRegistry.exportFrequentTypes(toDirectory: "/var/run/dump1090-mutability", withMaximumCount: 10)
     }
 }
