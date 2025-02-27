@@ -21,5 +21,10 @@ struct Main {
         manufacturerRegistry.importAircraft(fromRegistry: aircraftRegistry)
         manufacturerRegistry.export(toDirectory: "/var/run/dump1090-mutability")
         manufacturerRegistry.exportFrequentTypes(toDirectory: "/var/run/dump1090-mutability", withMaximumCount: 10)
+        
+        var flightRegistry = FlightPathRegistry()
+        flightRegistry.importRegistry(fromDirectory: "/var/run/dump1090-mutability/flight_paths")
+        flightRegistry.updateRegistry(fromDirectory: "/var/run/dump1090-mutability", withNumberOfFiles: 120)
+        flightRegistry.exportRegistry(toDirectory: "/var/run/dump1090-mutability/flight_paths")
     }
 }

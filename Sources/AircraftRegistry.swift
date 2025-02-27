@@ -27,7 +27,6 @@ struct AircraftRegistry: Codable {
     mutating func updateRegistry (fromDirectory directoryPath: String, withNumberOfFiles numberOfFiles: Int) {
         for n in 0..<numberOfFiles {
             let filePath = "\(directoryPath)/history_\(n).json"
-//            let filePath = "/var/run/dump1090-mutability/history_\(n).json"
             do {
                 let fileData = try Data(contentsOf: URL(fileURLWithPath: filePath))
                 let decoder = JSONDecoder()
