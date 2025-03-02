@@ -47,7 +47,7 @@ struct FlightPathRegistry: Codable {
     }
     
     private func importOverview (fromDirectory directoryPath: String) -> [Int] {
-        let importPath = "\(directoryPath)/flight_paths_overview.json"
+        let importPath = "\(directoryPath)/flight_paths/flight_paths_overview.json"
         let decoder = JSONDecoder()
         
         do {
@@ -61,7 +61,7 @@ struct FlightPathRegistry: Codable {
     }
     
     private func exportOverview (dates: [Int], toDirectory directoryPath: String) {
-        let exportPath = "\(directoryPath)/flight_paths_overview.json"
+        let exportPath = "\(directoryPath)/flight_paths/flight_paths_overview.json"
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted 
         
@@ -77,7 +77,7 @@ struct FlightPathRegistry: Codable {
         let calendar = Calendar.current
         let todayEpoch = Int(calendar.startOfDay(for: Date()).timeIntervalSince1970)
         
-        let importPath = "\(directoryPath)/flight_paths_\(todayEpoch).json"
+        let importPath = "\(directoryPath)/flight_paths/flight_paths_\(todayEpoch).json"
         let decoder = JSONDecoder()
         do {
             let fileData = try Data(contentsOf: URL(fileURLWithPath: importPath))
@@ -94,7 +94,7 @@ struct FlightPathRegistry: Codable {
         let calendar = Calendar.current
         let todayEpoch = Int(calendar.startOfDay(for: Date()).timeIntervalSince1970)
 
-        let exportPath = "\(directoryPath)/flight_paths_\(todayEpoch).json"
+        let exportPath = "\(directoryPath)/flight_paths/flight_paths_\(todayEpoch).json"
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted // Makes JSON readable
             
