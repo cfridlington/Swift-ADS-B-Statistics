@@ -15,5 +15,12 @@ let package = Package(
             name: "Swift-ADS-B-Statistics",
             dependencies: [.product(name: "ArgumentParser", package: "swift-argument-parser")]
         ),
+        .testTarget(
+            name: "Swift-ADS-B-Statistics-Tests",
+            dependencies: ["Swift-ADS-B-Statistics"],
+            resources: [
+                    .copy("Resources/history_complete.json")
+                ]
+        )
     ]
 )

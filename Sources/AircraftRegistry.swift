@@ -45,7 +45,7 @@ struct AircraftRegistry: Codable {
                     }
                 }
                 
-                lastUpdated = Date.now.timeIntervalSince1970
+                lastUpdated = Date().timeIntervalSince1970
                 
             }
             catch let error as NSError {
@@ -75,7 +75,7 @@ struct AircraftRegistry: Codable {
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
                 do {
-                    let (data, _) = try await URLSession.shared.data(from: url)
+                    let data = try Data(contentsOf: url)
                     
                     if let decodedResponse = try? JSONDecoder().decode(ADSBDBResponse.self, from: data) {
                         history[hex]!.properties = decodedResponse.response.aircraft
