@@ -19,7 +19,8 @@ let package = Package(
             name: "Swift-ADS-B-Statistics-Tests",
             dependencies: ["Swift-ADS-B-Statistics"],
             resources: [
-                    .copy("Resources/history_complete.json")
+                    .copy("Resources/history_complete.json"),
+                    .copy("Resources/history_0.json")
                 ]
         )
     ]

@@ -21,4 +21,14 @@ class AircraftRegistryTests {
         
         #expect(registry.history.count == 4937)
     }
+    
+    @Test func updateRegistry() async throws {
+        
+        let unwrappedPath = try #require(path, "Test data not found")
+        
+        registry.updateRegistry(fromDirectory: unwrappedPath, withNumberOfFiles: 1)
+        
+        #expect(registry.history.count == 2)
+        
+    }
 }
