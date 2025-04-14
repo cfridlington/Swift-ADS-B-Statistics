@@ -1,3 +1,9 @@
+<div align="right">
+![Testing Badge](https://github.com/cfridlington/Swift-ADS-B-Statistics/actions/workflows/swift.yml/badge.svg)
+</div>
+
+<img src="https://www.cfridlington.com/assets/projects/swift-ads-b-statistics/github-icon.png" width="250">
+
 # Swift-ADS-B-Statistics
 
 ## Overview
