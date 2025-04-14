@@ -20,10 +20,13 @@ let package = Package(
             dependencies: ["Swift-ADS-B-Statistics"],
             resources: [
                     .copy("Resources/history_0.json"),
+                    .copy("Resources/history_1.json"),
+                    .copy("Resources/history_2.json"),
                     .copy("Resources/history_large.json"),
                     .copy("Resources/history_small.json"),
                     .copy("Resources/properties_medium.json"),
-                    .copy("Resources/properties_small.json")
+                    .copy("Resources/properties_small.json"),
+                    .copy("Resources/flight_paths_1740891600.json")
                 ]
         )
     ]
