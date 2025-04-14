@@ -11,8 +11,8 @@ struct AircraftRegistry: Codable {
     var history: [String: AircraftData]
     var lastUpdated: Double
     
-    mutating func importRegistry (fromDirectory directoryPath: String) {
-        let filePath = "\(directoryPath)/history_complete.json"
+    mutating func importRegistry (fromDirectory directoryPath: String, filename: String = "history_complete.json") {
+        let filePath = "\(directoryPath)/\(filename)"
         do {
             let fileData = try Data(contentsOf: URL(fileURLWithPath: filePath))
             let decoder = JSONDecoder()
