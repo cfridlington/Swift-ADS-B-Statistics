@@ -1,0 +1,7 @@
+{ "now" : 1744577854.0,
+  "messages" : 136690,
+  "aircraft" : [
+    {"hex":"c06aaa","squawk":"4051","flight":"TSC641  ","lat":43.276886,"lon":-71.914715,"nucp":7,"seen_pos":1.6,"altitude":34025,"vert_rate":0,"track":322,"speed":439,"category":"A3","mlat":[],"tisb":[],"messages":135,"seen":1.6,"rssi":-31.6},
+    {"hex":"a1f0b4","mlat":[],"tisb":[],"messages":2183,"seen":79.7,"rssi":-34.4}
+  ]
+}

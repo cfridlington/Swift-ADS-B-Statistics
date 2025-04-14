@@ -1,0 +1,7 @@
+{ "now" : 1744592571.5,
+  "messages" : 191507,
+  "aircraft" : [
+    {"hex":"abc2e5","altitude":20325,"mlat":[],"tisb":[],"messages":5,"seen":12.2,"rssi":-37.1},
+    {"hex":"ad86ca","squawk":"1200","lat":43.574249,"lon":-71.414007,"nucp":7,"seen_pos":0.9,"altitude":700,"vert_rate":512,"track":249,"speed":71,"mlat":[],"tisb":[],"messages":3780,"seen":0.5,"rssi":-23.6}
+  ]
+}

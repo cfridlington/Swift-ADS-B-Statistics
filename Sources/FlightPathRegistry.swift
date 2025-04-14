@@ -73,11 +73,18 @@ struct FlightPathRegistry: Codable {
         }
     }
     
-    mutating func importRegistry (fromDirectory directoryPath: String) {
+    mutating func importRegistry (fromDirectory directoryPath: String, testEpoch: Int? = nil) {
         let calendar = Calendar.current
         let todayEpoch = Int(calendar.startOfDay(for: Date()).timeIntervalSince1970)
         
-        let importPath = "\(directoryPath)/flight_paths/flight_paths_\(todayEpoch).json"
+        let importPath: String
+        
+        if let testEpoch = testEpoch {
+            importPath = "\(directoryPath)/flight_paths_\(testEpoch).json"
+        } else {
+            importPath = "\(directoryPath)/flight_paths/flight_paths_\(todayEpoch).json"
+        }
+        
         let decoder = JSONDecoder()
         do {
             let fileData = try Data(contentsOf: URL(fileURLWithPath: importPath))
