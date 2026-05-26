@@ -13,11 +13,9 @@ jobs:
 
       - name: Install Swift
         run: |
-          curl -O https://download.swift.org/swiftly/linux/swiftly-$(uname -m).tar.gz
-          tar -xzf swiftly-$(uname -m).tar.gz
-          ./swiftly init --quiet --assume-yes
-          source ~/.local/share/swiftly/env.sh
-          swiftly install latest --assume-yes
+          curl -O "https://download.swift.org/swiftly/linux/swiftly-1.1.1-$(uname -m).tar.gz"
+          tar -zxf swiftly-1.1.1-$(uname -m).tar.gz
+          ./swiftly init
           echo "$HOME/.local/share/swiftly/bin" >> $GITHUB_PATH
 
       - name: Build release binary
