@@ -6,8 +6,7 @@ import PackageDescription
 let package = Package(
     name: "Swift-ADS-B-Statistics",
     platforms: [
-        .macOS(.v12),
-        .linux
+        .macOS(.v12)
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.3.0"),
