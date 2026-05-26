@@ -1,4 +1,4 @@
-name: Release Build
+name: Build Release and Deploy
 
 on:
   push:
@@ -19,11 +19,19 @@ jobs:
       - name: Build release binary
         run: swift build -c release --triple aarch64-unknown-linux-gnu
 
-      - name: Deploy to Murdock
+      - name: Add Pi to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.PI_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Pi
         env:
-          PI_SSH_KEY: ${{ secrets.PI_SSH_KEY }}
+          PI_SSH_KEY: ${{ secrets.MURDOCK_SSH_KEY }}
         run: |
           echo "$PI_SSH_KEY" > key && chmod 600 key
-          scp -i key -o StrictHostKeyChecking=no \
+          scp -i key \
             .build/aarch64-unknown-linux-gnu/release/Swift-ADS-B-Statistics \
-            cfridlington@192.168.1.185 100.84.141.27:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics
+            cfridlington@${{ secrets.PI_HOST }}:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp
+          ssh -i key cfridlington@${{ secrets.MURDOCK_HOST }} \
+            "mv /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp \
+                /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
