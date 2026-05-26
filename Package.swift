@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "Swift-ADS-B-Statistics",
-        platforms: [
+    platforms: [
         .macOS(.v12),
         .linux
     ],
