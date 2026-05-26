@@ -35,13 +35,10 @@ jobs:
           ssh-keyscan -H ${{ secrets.MURDOCK_HOST }} >> ~/.ssh/known_hosts
 
       - name: Deploy to Pi
-        env:
-          MURDOCK_SSH_KEY: ${{ secrets.MURDOCK_SSH_KEY }}
         run: |
-          echo "$MURDOCK_SSH_KEY" > key && chmod 600 key
-          scp -i key \
+          scp \
             .build/release/Swift-ADS-B-Statistics \
             cfridlington@${{ secrets.MURDOCK_HOST }}:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp
-          ssh -i key cfridlington@${{ secrets.MURDOCK_HOST }} \
+          ssh cfridlington@${{ secrets.MURDOCK_HOST }} \
             "mv /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp \
                 /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
