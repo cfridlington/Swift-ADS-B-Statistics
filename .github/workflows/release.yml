@@ -1,0 +1,37 @@
+name: Build Release and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Swift
+        uses: swift-actions/setup-swift@v2
+        with:
+          swift-version: "6.3.2"
+
+      - name: Build release binary
+        run: swift build -c release --triple aarch64-unknown-linux-gnu
+
+      - name: Add Pi to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.PI_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Pi
+        env:
+          PI_SSH_KEY: ${{ secrets.MURDOCK_SSH_KEY }}
+        run: |
+          echo "$PI_SSH_KEY" > key && chmod 600 key
+          scp -i key \
+            .build/aarch64-unknown-linux-gnu/release/Swift-ADS-B-Statistics \
+            cfridlington@${{ secrets.PI_HOST }}:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp
+          ssh -i key cfridlington@${{ secrets.MURDOCK_HOST }} \
+            "mv /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp \
+                /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
