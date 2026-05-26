@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +19,7 @@ jobs:
           echo "$HOME/.local/share/swiftly/bin" >> $GITHUB_PATH
 
       - name: Build release binary
-        run: swift build -c release --triple aarch64-unknown-linux-gnu
+        run: swift build -c release
 
       - name: Add Pi to known hosts
         run: |
@@ -28,11 +28,11 @@ jobs:
 
       - name: Deploy to Pi
         env:
-          PI_SSH_KEY: ${{ secrets.MURDOCK_SSH_KEY }}
+          PI_SSH_KEY: ${{ secrets.PI_SSH_KEY }}
         run: |
-          echo "$PI_SSH_KEY" > key && chmod 600 key
+          echo "$MURDOCK_SSH_KEY" > key && chmod 600 key
           scp -i key \
-            .build/aarch64-unknown-linux-gnu/release/Swift-ADS-B-Statistics \
+            .build/release/Swift-ADS-B-Statistics \
             cfridlington@${{ secrets.MURDOCK_HOST }}:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp
           ssh -i key cfridlington@${{ secrets.MURDOCK_HOST }} \
             "mv /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp \
