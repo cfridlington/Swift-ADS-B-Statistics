@@ -75,10 +75,12 @@ struct AircraftRegistry: Codable {
                 request.setValue("application/json", forHTTPHeaderField: "Content-Type")
                 
                 do {
-                    let data = try Data(contentsOf: url)
-                    
-                    if let decodedResponse = try? JSONDecoder().decode(ADSBDBResponse.self, from: data) {
-                        history[hex]!.properties = decodedResponse.response.aircraft
+                    let (data, response) = try await URLSession.shared.data(for: request)
+                
+                    if let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 {
+                        if let decodedResponse = try? JSONDecoder().decode(ADSBDBResponse.self, from: data) {
+                            history[hex]?.properties = decodedResponse.response.aircraft
+                        }
                     }
                 } catch {
                     print("Error Fetching from ADSB-DB: \(error)")
