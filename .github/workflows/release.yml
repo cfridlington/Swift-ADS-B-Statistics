@@ -19,7 +19,7 @@ jobs:
           echo "$HOME/.local/share/swiftly/bin" >> $GITHUB_PATH
 
       - name: Build release binary
-        run: swift build -c release
+        run: swift build -c release -Xswiftc -static-stdlib
 
       - name: Connect to Tailscale
         uses: tailscale/github-action@v4
@@ -41,4 +41,5 @@ jobs:
             cfridlington@${{ secrets.MURDOCK_HOST }}:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp
           ssh cfridlington@${{ secrets.MURDOCK_HOST }} \
             "mv /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp \
-                /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
+                /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics && \
+             chmod +x /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
