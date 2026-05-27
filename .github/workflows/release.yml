@@ -41,4 +41,5 @@ jobs:
             cfridlington@${{ secrets.MURDOCK_HOST }}:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp
           ssh cfridlington@${{ secrets.MURDOCK_HOST }} \
             "mv /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp \
-                /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
+                /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics && \
+             chmod +x /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
