@@ -19,7 +19,7 @@ jobs:
           echo "$HOME/.local/share/swiftly/bin" >> $GITHUB_PATH
 
       - name: Build release binary
-        run: swift build -c release
+        run: swift build -c release -Xswiftc -static-stdlib
 
       - name: Connect to Tailscale
         uses: tailscale/github-action@v4
