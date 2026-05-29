@@ -33,18 +33,34 @@ jobs:
           oauth-secret: ${{ secrets.TAILSCALE_CLIENT_SECRET }}
           tags: tag:developer-ci-pipeline
           ping: ${{ secrets.MURDOCK_HOST }}
+          ping: ${{ secrets.OVEUR_HOST }}
           
-      - name: Add Pi to known hosts
+      - name: Add Murdock to known hosts
         run: |
           mkdir -p ~/.ssh
           ssh-keyscan -H ${{ secrets.MURDOCK_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Deploy to Pi
+      - name: Add Oveur to known hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.OVEUR_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to Murdock
         run: |
           scp \
             .build/release/Swift-ADS-B-Statistics \
             cfridlington@${{ secrets.MURDOCK_HOST }}:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp
           ssh cfridlington@${{ secrets.MURDOCK_HOST }} \
+            "mv /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp \
+                /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics && \
+             chmod +x /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
+
+      - name: Deploy to Oveur
+        run: |
+          scp \
+            .build/release/Swift-ADS-B-Statistics \
+            cfridlington@${{ secrets.OVEUR_HOST }}:/home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp
+          ssh cfridlington@${{ secrets.OVEUR_HOST }} \
             "mv /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics.tmp \
                 /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics && \
              chmod +x /home/cfridlington/Swift-ADS-B-Statistics/.build/release/Swift-ADS-B-Statistics"
