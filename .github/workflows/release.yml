@@ -32,8 +32,12 @@ jobs:
           oauth-client-id: ${{ secrets.TAILSCALE_CLIENT_ID }}
           oauth-secret: ${{ secrets.TAILSCALE_CLIENT_SECRET }}
           tags: tag:developer-ci-pipeline
-          ping: ${{ secrets.MURDOCK_HOST }}
-          ping: ${{ secrets.OVEUR_HOST }}
+
+      - name: Ping Murdock
+        run: ping -c 1 ${{ secrets.MURDOCK_HOST }}
+
+      - name: Ping Oveur
+        run: ping -c 1 ${{ secrets.OVEUR_HOST }}
           
       - name: Add Murdock to known hosts
         run: |
